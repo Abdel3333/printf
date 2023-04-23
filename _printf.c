@@ -1,5 +1,19 @@
 #include <stdarg.h>
 #include "main.h"
+
+/**
+ *formatstr - format string
+ * @str: string pointer
+ * Return: nothing
+ */
+void formatstr(char *str)
+{
+	while (str[j])
+	{
+		printc(str[j]);
+		j++;
+	}
+}
 /**
  * _printf - produces output according to a format
  * @format: a pointer to string
@@ -13,7 +27,7 @@ int _printf(const char *format, ...)
 
 	va_start(args, format);
 	if (format == NULL)
-		return NULL;
+		return (-1);
 	for (i = 0; format[i]; i++)
 	{
 		flen++;
@@ -29,21 +43,15 @@ int _printf(const char *format, ...)
 					break;
 				case 's':
 					str = va_arg(args, char*);
-					while (str[j])
-					{
-						printc(str[j]);
-						j++;
-					}
+					formatstr(str);
 					break;
-				case 'i':
-				case 'd':
-					integ = va_arg(args, int);
-					print_number(integ);
-					break;
-				default:
-					printc(format[i]);
-					break;
-
+				/*
+				*case 'i':
+				*case 'd':
+				*	integ = va_arg(args, int);
+				*	print_number(integ);
+				*	break;
+				*/
 			}
 			i++;
 		}
