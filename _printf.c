@@ -46,21 +46,25 @@ int _printf(const char *format, ...)
 					break;
 				case 's':
 					str = va_arg(args, char*);
-					if (str == NULL)
-						formatstr("null");
-					formatstr(str);
+					if (str != NULL)
+						formatstr(str);
 					break;
 				case 'i':
 				case 'd':
 					integ = va_arg(args, int);
 					print_number(integ);
 					break;
+				default:
+					printc(format[i]);
+					printc(format[i + 1]);
+					break;
 			}
 			i++;
 		}
 		else if (format[i] == '%' && !format[i + 1])
 			break;
-		printc(format[i]);
+		else
+			printc(format[i]);
 	}
 	va_end(args);
 	return (flen);
