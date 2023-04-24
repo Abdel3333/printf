@@ -23,7 +23,7 @@ void formatstr(char *str)
  */
 int _printf(const char *format, ...)
 {
-	int i = 0, flen = 0/* integ*/;
+	int i = 0, flen = 0, integ;
 	char *str;
 	va_list args;
 
@@ -45,18 +45,20 @@ int _printf(const char *format, ...)
 					break;
 				case 's':
 					str = va_arg(args, char*);
+					if (str == NULL)
+						formatstr("null");
 					formatstr(str);
 					break;
-				/*
-				*case 'i':
-				*case 'd':
-				*	integ = va_arg(args, int);
-				*	print_number(integ);
-				*	break;
-				*/
+				case 'i':
+				case 'd':
+					integ = va_arg(args, int);
+					print_number(integ);
+					break;
 			}
 			i++;
 		}
+		else if (format[i] == '%' && !format[i + 1])
+			break;
 		else
 			printc(format[i]);
 	}
