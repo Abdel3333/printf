@@ -1,5 +1,6 @@
 #include <stdarg.h>
 #include "main.h"
+#include <stddef.h>
 
 /**
  *formatstr - format string
@@ -8,6 +9,7 @@
  */
 void formatstr(char *str)
 {
+	int j = 0;
 	while (str[j])
 	{
 		printc(str[j]);
@@ -21,7 +23,7 @@ void formatstr(char *str)
  */
 int _printf(const char *format, ...)
 {
-	int i = 0, flen = 0, j = 0, integ;
+	int i = 0, flen = 0/* integ*/;
 	char *str;
 	va_list args;
 
