@@ -14,10 +14,9 @@ void formatstr(char *str, int *len)
 
 	while (str[j])
 	{
-		printc(str[j]);
+		printc(str[j], len);
 		j++;
 	}
-	*len += j;
 }
 /**
  * _printf - produces output according to a format
@@ -37,8 +36,7 @@ int _printf(const char *format, ...)
 	{
 		while (format[i] && format[i] != '%')
 		{
-			printc(format[i]);
-			flen++;
+			printc(format[i], &flen);
 			i++;
 		}
 		if (!format[i] || !format[i + 1])
@@ -47,12 +45,10 @@ int _printf(const char *format, ...)
 		switch (format[i])
 		{
 			case '%':
-				printc(format[i]);
-				flen++;
+				printc(format[i], &flen);
 				break;
 			case 'c':
-				printc(va_arg(args, int));
-				flen++;
+				printc(va_arg(args, int), &flen);
 				break;
 			case 's':
 				str = va_arg(args, char*);

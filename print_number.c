@@ -9,13 +9,11 @@ void print_number(int n, int *len)
 {
 	if (n < 0)
 	{
-		printc('-');
-		*len += 1;
+		printc('-', len);
 		n = -n;
 	}
 
 	if (n / 10)
 		print_number(n / 10, len);
-	printc(n % 10 + '0');
-	*len += 1;
+	printc(n % 10 + '0', len);
 }
