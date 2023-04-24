@@ -52,8 +52,9 @@ int _printf(const char *format, ...)
 				break;
 			case 's':
 				str = va_arg(args, char*);
-				if (str != NULL)
-					formatstr(str, &flen);
+				if (str == NULL)
+					str = "null";
+				formatstr(str, &flen);
 				break;
 			case 'i':
 			case 'd':
