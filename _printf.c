@@ -10,6 +10,7 @@
 void formatstr(char *str)
 {
 	int j = 0;
+
 	while (str[j])
 	{
 		printc(str[j]);
@@ -59,8 +60,7 @@ int _printf(const char *format, ...)
 		}
 		else if (format[i] == '%' && !format[i + 1])
 			break;
-		else
-			printc(format[i]);
+		printc(format[i]);
 	}
 	va_end(args);
 	return (flen);
