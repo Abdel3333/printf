@@ -5,9 +5,10 @@
 /**
  *formatstr - format string
  * @str: string pointer
+ * @len: int pointer
  * Return: nothing
  */
-void formatstr(char *str)
+void formatstr(char *str, int *len)
 {
 	int j = 0;
 
@@ -16,6 +17,7 @@ void formatstr(char *str)
 		printc(str[j]);
 		j++;
 	}
+	*len += j;
 }
 /**
  * _printf - produces output according to a format
@@ -33,38 +35,36 @@ int _printf(const char *format, ...)
 		return (-1);
 	for (i = 0; format[i]; i++)
 	{
-		flen++;
-		if (format[i] == '%' && format[i + 1])
+		while (format[i] && format[i] != '%')
 		{
-			switch (format[i + 1])
-			{
-				case '%':
-					printc(format[i]);
-					break;
-				case 'c':
-					printc(va_arg(args, int));
-					break;
-				case 's':
-					str = va_arg(args, char*);
-					if (str != NULL)
-						formatstr(str);
-					break;
-				case 'i':
-				case 'd':
-					integ = va_arg(args, int);
-					print_number(integ);
-					break;
-				default:
-					printc(format[i]);
-					printc(format[i + 1]);
-					break;
-			}
+			printc(format[i]);
+			flen++;
 			i++;
 		}
-		else if (format[i] == '%' && !format[i + 1])
+		if (!format[i] || !format[i + 1])
 			break;
-		else
-			printc(format[i]);
+		i++;
+		switch (format[i])
+		{
+			case '%':
+				printc(format[i]);
+				flen++;
+				break;
+			case 'c':
+				printc(va_arg(args, int));
+				flen++;
+				break;
+			case 's':
+				str = va_arg(args, char*);
+				if (str != NULL)
+					formatstr(str, &flen);
+				break;
+			case 'i':
+			case 'd':
+				integ = va_arg(args, int);
+				print_number(integ, &flen);
+				break;
+		}
 	}
 	va_end(args);
 	return (flen);
