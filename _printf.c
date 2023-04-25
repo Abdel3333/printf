@@ -1,4 +1,6 @@
 #include <stdarg.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include "main.h"
 #include <stddef.h>
 
@@ -21,6 +23,27 @@ void formatstr(char *str, int *len)
 
 
 /**
+ * *converttobase - convert number
+ * @n: number
+ * @b: base
+ * Return: pointer to string
+ */
+char *converttobase(unsigned int n, int b)
+{
+	char rep[] = "0123456789ABCDEF";
+	char *buf = malloc(50);
+	char *ptr;
+
+	ptr = &buf[49];
+	*ptr = '\0';
+	do {
+		*--ptr = rep[n % b];
+		n /= b;
+	} while (n != 0);
+	return (ptr);
+}
+
+/**
  * conversionhandle - convert specifiers
  * @format: string
  * @i: position
@@ -30,7 +53,7 @@ void formatstr(char *str, int *len)
  */
 void conversionhandle(const char *format, int i, va_list args, int *flen)
 {
-	int integ;
+	/*int integ;*/
 	char *str;
 
 	switch (format[i])
@@ -49,8 +72,13 @@ void conversionhandle(const char *format, int i, va_list args, int *flen)
 			break;
 		case 'i':
 		case 'd':
-			integ = va_arg(args, int);
-			print_number(integ, flen);
+			str = converttobase(va_arg(args, int), 10);
+			/*print_number(integ, flen);*/
+			formatstr(str, flen);
+			break;
+		case 'b':
+			str = converttobase(va_arg(args, unsigned int), 2);
+			formatstr(str, flen);
 			break;
 		default:
 			printc('%', flen);
