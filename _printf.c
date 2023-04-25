@@ -95,6 +95,8 @@ void conversionhandle(const char *format, int i, va_list args, int *flen)
 			break;
 		case 'b':
 			str = converttobase(va_arg(args, unsigned int), 2);
+			if (str == NULL)
+				str = "0";
 			formatstr(str, flen);
 			break;
 		case 'o':
