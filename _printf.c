@@ -32,34 +32,13 @@ char *strtolowercase(char *str)
 
 	while (str[i])
 	{
-		if (str[i] >= 65 && str[i] <=90)
+		if (str[i] >= 65 && str[i] <= 90)
 			str[i] += 32;
 		i++;
 	}
 	return (str);
 }
 
-
-/**
- * *converttobase - convert number
- * @n: number
- * @b: base
- * Return: pointer to string
- */
-char *converttobase(unsigned int n, int b)
-{
-	char rep[] = "0123456789ABCDEF";
-	char *buf = malloc(50);
-	char *ptr;
-
-	ptr = &buf[49];
-	*ptr = '\0';
-	do {
-		*--ptr = rep[n % b];
-		n /= b;
-	} while (n != 0);
-	return (ptr);
-}
 
 /**
  * conversionhandle - convert specifiers
@@ -95,8 +74,6 @@ void conversionhandle(const char *format, int i, va_list args, int *flen)
 			break;
 		case 'b':
 			str = converttobase(va_arg(args, unsigned int), 2);
-			if (str == NULL)
-				str = "(null)";
 			formatstr(str, flen);
 			break;
 		case 'o':
@@ -115,6 +92,16 @@ void conversionhandle(const char *format, int i, va_list args, int *flen)
 		case 'u':
 			str = converttobase(va_arg(args, unsigned int), 10);
 			formatstr(str, flen);
+			break;
+		case 'S':
+			str = va_arg(args, char*);
+			if (str == NULL)
+				str = "(null)";
+			str = custum_string(str);
+			formatstr(str, flen);
+			break;
+		case 'r':
+			print_rev(va_arg(args, char*), flen);
 			break;
 		default:
 			printc('%', flen);
