@@ -73,43 +73,38 @@ void conversionhandle(const char *format, int i, va_list args, int *flen)
 			print_number(integ, flen);
 			break;
 		case 'b':
-			str = converttobase(va_arg(args, unsigned int), 2);
-			formatstr(str, flen);
+			formatstr(converttobase(va_arg(args, unsigned int), 2), flen);
 			break;
 		case 'o':
-			str = converttobase(va_arg(args, unsigned int), 8);
-			formatstr(str, flen);
+			formatstr(converttobase(va_arg(args, unsigned int), 8), flen);
 			break;
 		case 'X':
-			str = converttobase(va_arg(args, unsigned int), 16);
-			formatstr(str, flen);
+			formatstr(converttobase(va_arg(args, unsigned int), 16), flen);
 			break;
 		case 'x':
-			str = converttobase(va_arg(args, unsigned int), 16);
-			str = strtolowercase(str);
-			formatstr(str, flen);
+			formatstr(
+			strtolowercase(converttobase(va_arg(args, unsigned int), 16)), 
+			flen);
 			break;
 		case 'u':
-			str = converttobase(va_arg(args, unsigned int), 10);
-			formatstr(str, flen);
+			formatstr(converttobase(va_arg(args, unsigned int), 10), flen);
 			break;
 		case 'S':
-			str = va_arg(args, char*);
-			if (str == NULL)
-				str = "(null)";
-			str = custum_string(str);
-			formatstr(str, flen);
+			formatstr(custum_string(va_arg(args, char*)), flen);
 			break;
 		case 'r':
 			print_rev(va_arg(args, char*), flen);
+			break;
+		case 'R':
+			formatstr(rot13(va_arg(args, char*)), flen);
 			break;
 		default:
 			printc('%', flen);
 			printc(format[i], flen);
 			break;
-
 	}
 }
+
 /**
  * _printf - produces output according to a format
  * @format: a pointer to string
