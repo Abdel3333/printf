@@ -61,6 +61,10 @@ int _printf(const char *format, ...)
 				integ = va_arg(args, int);
 				print_number(integ, &flen);
 				break;
+			default:
+				printc('%', &flen);
+				printc(format[i], &flen);
+				break;
 		}
 	}
 	va_end(args);
