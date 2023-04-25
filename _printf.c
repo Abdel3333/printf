@@ -21,6 +21,24 @@ void formatstr(char *str, int *len)
 	}
 }
 
+/**
+ * *strtolowercase - transform to lower case
+ * @str: string
+ * Return: string pointer
+ */
+char *strtolowercase(char *str)
+{
+	int i = 0;
+
+	while (str[i])
+	{
+		if (str[i] >= 65 && str[i] <=90)
+			str[i] += 32;
+		i++;
+	}
+	return (str);
+}
+
 
 /**
  * *converttobase - convert number
@@ -53,7 +71,7 @@ char *converttobase(unsigned int n, int b)
  */
 void conversionhandle(const char *format, int i, va_list args, int *flen)
 {
-	/*int integ;*/
+	int integ;
 	char *str;
 
 	switch (format[i])
@@ -72,12 +90,28 @@ void conversionhandle(const char *format, int i, va_list args, int *flen)
 			break;
 		case 'i':
 		case 'd':
-			str = converttobase(va_arg(args, int), 10);
-			/*print_number(integ, flen);*/
-			formatstr(str, flen);
+			integ = va_arg(args, int);
+			print_number(integ, flen);
 			break;
 		case 'b':
 			str = converttobase(va_arg(args, unsigned int), 2);
+			formatstr(str, flen);
+			break;
+		case 'o':
+			str = converttobase(va_arg(args, unsigned int), 8);
+			formatstr(str, flen);
+			break;
+		case 'X':
+			str = converttobase(va_arg(args, unsigned int), 16);
+			formatstr(str, flen);
+			break;
+		case 'x':
+			str = converttobase(va_arg(args, unsigned int), 16);
+			str = strtolowercase(str);
+			formatstr(str, flen);
+			break;
+		case 'u':
+			str = converttobase(va_arg(args, unsigned int), 10);
 			formatstr(str, flen);
 			break;
 		default:
