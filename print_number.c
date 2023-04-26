@@ -5,12 +5,12 @@
  * @len: the pointer to int
  * Return: Nothing
  */
-void print_number(int n, int *len)
+void print_number(long n, int *len)
 {
 	if (n < 0)
 	{
 		printc('-', len);
-		n = -n;
+		n = - n;
 	}
 
 	if (n / 10)

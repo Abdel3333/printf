@@ -41,5 +41,6 @@ int main(void)
     _printf("Unknown:[%r]\n");
     printf("Unknown:[%r]\n");
     _printf("%b\n", 98);
-    return (0);
+    _printf("%d\n", INT_MIN);
+    return (_printf("%"));
 }

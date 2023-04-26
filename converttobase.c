@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stddef.h>
 /**
  * *converttobase - convert number
  * @n: number
@@ -8,8 +9,11 @@
 char *converttobase(unsigned int n, int b)
 {
 	char rep[] = "0123456789ABCDEF";
-	char *buf = malloc(50), *ptr;
+	char *buf, *ptr;
 
+	buf = malloc(50);
+	if (buf == NULL)
+		return (NULL);
 	ptr = &buf[49];
 	*ptr = '\0';
 	do {
